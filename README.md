@@ -1,0 +1,2 @@
+- add tenant database connection in config/database.php
+- add tenant disk in config/filesystems.php

@@ -1,0 +1,14 @@
+<?php
+/**
+ * @var \SergeyKasyanov\Tenancy\Models\Tenant $record
+ */
+?>
+<?php foreach ($record->domains as $domain): ?>
+    <div>
+        <?php if (!$domain->is_active): ?>
+            <em class="text-muted"><?= $domain->url ?></em>
+        <?php else: ?>
+            <?= $domain->url ?>
+        <?php endif ?>
+    </div>
+<?php endforeach ?>

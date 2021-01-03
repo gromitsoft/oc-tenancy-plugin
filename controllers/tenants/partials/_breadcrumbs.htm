@@ -1,0 +1,21 @@
+<?php
+/**
+ * @var \SergeyKasyanov\Tenancy\Controllers\Tenants $this
+ */
+?>
+<ul>
+    <li>
+        <a href="<?= $this->actionUrl('/') ?>">
+            <?= __('sergeykasyanov.tenancy::lang.controllers.tenants.partials.breadcrumbs.title') ?>
+        </a>
+    </li>
+    <?php if ($this->fatalError): ?>
+        <li>
+            <span class="text-danger">
+                <?= __('sergeykasyanov.tenancy::lang.controllers.tenants.partials.breadcrumbs.fatal_error') ?>
+            </span>
+        </li>
+    <?php else: ?>
+        <li><?= e($this->pageTitle) ?></li>
+    <?php endif ?>
+</ul>

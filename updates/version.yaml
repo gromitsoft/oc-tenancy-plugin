@@ -1,0 +1,4 @@
+1.0.1:
+    - First version of Tenancy
+    - 1_0_1_create_tenants_table.php
+    - 1_0_1_create_domains_table.php

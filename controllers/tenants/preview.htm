@@ -1,0 +1,23 @@
+<?php
+
+use October\Rain\Support\Facades\Block;
+
+/**
+ * @var \SergeyKasyanov\Tenancy\Controllers\Tenants|\Backend\Behaviors\FormController $this
+ */
+?>
+<?php Block::put('breadcrumb') ?>
+<?= $this->makePartial('partials/breadcrumbs') ?>
+<?php Block::endPut() ?>
+
+<?php if (!$this->fatalError): ?>
+
+    <div class="form-preview">
+        <?= $this->formRenderPreview() ?>
+    </div>
+
+<?php else: ?>
+
+    <?= $this->makePartial('partials/fatal_error') ?>
+
+<?php endif ?>

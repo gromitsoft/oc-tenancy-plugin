@@ -1,0 +1,64 @@
+<?php
+
+use October\Rain\Support\Facades\Block;
+use October\Rain\Support\Facades\Form;
+
+/**
+ * @var \SergeyKasyanov\Tenancy\Controllers\Tenants|\Backend\Behaviors\FormController $this
+ */
+?>
+<?php Block::put('breadcrumb') ?>
+<?= $this->makePartial('partials/breadcrumbs') ?>
+<?php Block::endPut() ?>
+
+<?php if (!$this->fatalError): ?>
+
+    <?= Form::open(['class' => 'layout']) ?>
+
+        <div class="layout-row">
+            <?= $this->formRender() ?>
+        </div>
+
+        <div class="form-buttons">
+            <div class="loading-indicator-container">
+                <button
+                    type="submit"
+                    data-request="onSave"
+                    data-request-data="redirect:0"
+                    data-hotkey="ctrl+s, cmd+s"
+                    data-load-indicator="<?= __('sergeykasyanov.tenancy::lang.controllers.tenants.pages.update.btn_save.load_indicator') ?>"
+                    class="btn btn-primary">
+                    <?= __('sergeykasyanov.tenancy::lang.controllers.tenants.pages.update.btn_save.label') ?>
+                </button>
+                <button
+                    type="button"
+                    data-request="onSave"
+                    data-request-data="close:1"
+                    data-hotkey="ctrl+enter, cmd+enter"
+                    data-load-indicator="<?= __('sergeykasyanov.tenancy::lang.controllers.tenants.pages.update.btn_save_and_close.load_indicator') ?>"
+                    class="btn btn-default">
+                    <?= __('sergeykasyanov.tenancy::lang.controllers.tenants.pages.update.btn_save_and_close.label') ?>
+                </button>
+                <button
+                    type="button"
+                    class="oc-icon-trash-o btn-icon danger pull-right"
+                    data-request="onDelete"
+                    data-load-indicator="Deleting Tenant..."
+                    data-request-confirm="Delete this tenant?">
+                </button>
+                <span class="btn-text">
+                    <?= __('sergeykasyanov.tenancy::lang.controllers.tenants.pages.common.or') ?>&nbsp;&nbsp;
+                    <a href="<?= $this->actionUrl('/') ?>">
+                        <?= __('sergeykasyanov.tenancy::lang.controllers.tenants.pages.common.cancel') ?>
+                    </a>
+                </span>
+            </div>
+        </div>
+
+    <?= Form::close() ?>
+
+<?php else: ?>
+
+    <?= $this->makePartial('partials/fatal_error') ?>
+
+<?php endif ?>

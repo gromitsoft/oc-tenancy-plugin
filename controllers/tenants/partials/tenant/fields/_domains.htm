@@ -1,0 +1,13 @@
+<?php
+/**
+ * @var \SergeyKasyanov\Tenancy\Controllers\Tenants|\Backend\Behaviors\RelationController $this
+ * @var string                                                                            $formContext
+ */
+?>
+<?php if ($formContext === 'update'): ?>
+    <?= $this->relationRender('domains') ?>
+<?php elseif ($formContext === 'create'): ?>
+    <p class="flash-message static info">
+        <?= __('sergeykasyanov.tenancy::lang.controllers.tenants.partials.tenant.fields.domains_create.message') ?>
+    </p>
+<?php endif ?>
