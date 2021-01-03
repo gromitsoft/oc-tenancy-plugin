@@ -1,0 +1,16 @@
+{
+    "name": "gromitsoft/oc-tenancy-plugin",
+    "description": "Multitenancy for OctoberCMS.",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sergey Kasyanov",
+            "email": "serega.kasyanow@yandex.ru"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "composer/installers": "~1.0"
+    }
+}

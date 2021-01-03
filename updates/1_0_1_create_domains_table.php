@@ -6,7 +6,7 @@
  * @noinspection PhpUnused
  */
 
-namespace SergeyKasyanov\Tenancy\Updates;
+namespace GromIT\Tenancy\Updates;
 
 use October\Rain\Database\Schema\Blueprint;
 use October\Rain\Database\Updates\Migration;
@@ -16,12 +16,12 @@ class CreateDomainsTable extends Migration
 {
     public function up(): void
     {
-        Schema::create('sergeykasyanov_tenancy_domains', function (Blueprint $table) {
+        Schema::create('gromit_tenancy_domains', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
 
             $table->unsignedInteger('tenant_id');
-            $table->foreign('tenant_id')->references('id')->on('sergeykasyanov_tenancy_tenants')->onDelete('cascade');
+            $table->foreign('tenant_id')->references('id')->on('gromit_tenancy_tenants')->onDelete('cascade');
 
             $table->string('url')->unique();
             $table->boolean('is_active')->default(false);
@@ -32,6 +32,6 @@ class CreateDomainsTable extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('sergeykasyanov_tenancy_domains');
+        Schema::dropIfExists('gromit_tenancy_domains');
     }
 }

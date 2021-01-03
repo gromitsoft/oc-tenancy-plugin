@@ -1,6 +1,6 @@
 <?php
 
-namespace SergeyKasyanov\Tenancy\QueryBuilders;
+namespace GromIT\Tenancy\QueryBuilders;
 
 use October\Rain\Database\Builder;
 

@@ -1,16 +1,16 @@
 <?php
 
-namespace SergeyKasyanov\Tenancy\Events;
+namespace GromIT\Tenancy\Events;
 
 use Illuminate\Queue\SerializesModels;
-use SergeyKasyanov\Tenancy\Models\Tenant;
+use GromIT\Tenancy\Models\Tenant;
 
 class AfterMakeTenantCurrent
 {
     use SerializesModels;
 
     /**
-     * @var \SergeyKasyanov\Tenancy\Models\Tenant
+     * @var \GromIT\Tenancy\Models\Tenant
      */
     private $tenant;
 
@@ -20,7 +20,7 @@ class AfterMakeTenantCurrent
     }
 
     /**
-     * @return \SergeyKasyanov\Tenancy\Models\Tenant
+     * @return \GromIT\Tenancy\Models\Tenant
      */
     public function getTenant(): Tenant
     {

@@ -1,12 +1,15 @@
-<?php namespace SergeyKasyanov\Tenancy\Models;
+<?php
+
+namespace GromIT\Tenancy\Models;
 
 use October\Rain\Database\Model;
 use October\Rain\Database\Relations\HasMany;
 use October\Rain\Database\Traits\Validation;
-use SergeyKasyanov\Tenancy\Actions\GenerateUniqueDbName;
-use SergeyKasyanov\Tenancy\Actions\PerformAfterCreateTenantTasks;
-use SergeyKasyanov\Tenancy\Actions\PerformAfterDeleteTenantTasks;
-use SergeyKasyanov\Tenancy\QueryBuilders\TenantQueryBuilder;
+use October\Rain\Exception\SystemException;
+use GromIT\Tenancy\Actions\Tasks\PerformAfterCreateTenantTasks;
+use GromIT\Tenancy\Actions\Tasks\PerformAfterDeleteTenantTasks;
+use GromIT\Tenancy\Classes\TenancyManager;
+use GromIT\Tenancy\QueryBuilders\TenantQueryBuilder;
 
 /**
  * Tenant Model
@@ -18,14 +21,14 @@ use SergeyKasyanov\Tenancy\QueryBuilders\TenantQueryBuilder;
  * @property \October\Rain\Argon\Argon                                                 $created_at
  * @property \October\Rain\Argon\Argon                                                 $updated_at
  *
- * @property \October\Rain\Database\Collection|\SergeyKasyanov\Tenancy\Models\Domain[] $domains
+ * @property \October\Rain\Database\Collection|\GromIT\Tenancy\Models\Domain[] $domains
  * @method HasMany                                                                     domains()
  *
  * @method static TenantQueryBuilder query()
  */
 class Tenant extends Model
 {
-    public $table = 'sergeykasyanov_tenancy_tenants';
+    public $table = 'gromit_tenancy_tenants';
 
     protected $fillable = [
         'name',
@@ -48,7 +51,7 @@ class Tenant extends Model
     ];
 
     public $customMessages = [
-        'name.required' => 'sergeykasyanov.tenancy::lang.models.tenant.validation.name.required',
+        'name.required' => 'gromit.tenancy::lang.models.tenant.validation.name.required',
     ];
 
     public function newEloquentBuilder($query): TenantQueryBuilder
@@ -56,14 +59,23 @@ class Tenant extends Model
         return new TenantQueryBuilder($query);
     }
 
-    protected function beforeCreate(): void
-    {
-        $this->database_name = GenerateUniqueDbName::make()->execute();
-    }
-
     protected function afterCreate(): void
     {
         PerformAfterCreateTenantTasks::make()->execute($this);
+    }
+
+    /**
+     * @throws \October\Rain\Exception\SystemException
+     */
+    protected function beforeDelete(): void
+    {
+        $currentTenant = TenancyManager::instance()->getCurrent();
+
+        if ($currentTenant && $currentTenant->id === $this->id) {
+            throw new SystemException(
+                __('gromit.tenancy::lang.exceptions.tenant_cant_delete_self')
+            );
+        }
     }
 
     protected function afterDelete(): void

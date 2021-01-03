@@ -6,7 +6,7 @@
  * @noinspection PhpUnused
  */
 
-namespace SergeyKasyanov\Tenancy\Updates;
+namespace GromIT\Tenancy\Updates;
 
 use October\Rain\Database\Schema\Blueprint;
 use October\Rain\Database\Updates\Migration;
@@ -16,13 +16,13 @@ class CreateTenantsTable extends Migration
 {
     public function up(): void
     {
-        Schema::create('sergeykasyanov_tenancy_tenants', function (Blueprint $table) {
+        Schema::create('gromit_tenancy_tenants', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
 
             $table->string('name');
             $table->boolean('is_active')->default(false);
-            $table->string('database_name');
+            $table->string('database_name')->nullable();
 
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ class CreateTenantsTable extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('sergeykasyanov_tenancy_tenants');
+        Schema::dropIfExists('gromit_tenancy_tenants');
     }
 }

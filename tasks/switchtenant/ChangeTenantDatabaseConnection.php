@@ -1,19 +1,22 @@
 <?php
 
-namespace SergeyKasyanov\Tenancy\Tasks\SwitchTenant;
+namespace GromIT\Tenancy\Tasks\SwitchTenant;
 
 use Illuminate\Database\DatabaseManager;
-use October\Rain\Exception\SystemException;
 use October\Rain\Support\Facades\Schema;
-use SergeyKasyanov\Tenancy\Models\Tenant;
-use SergeyKasyanov\Tenancy\Tasks\SwitchTenantTask;
+use GromIT\Tenancy\Concerns\UsesTenancyConfig;
+use GromIT\Tenancy\Exceptions\ChangeTenantDatabaseException;
+use GromIT\Tenancy\Models\Tenant;
+use GromIT\Tenancy\Tasks\SwitchTenantTask;
 
 class ChangeTenantDatabaseConnection implements SwitchTenantTask
 {
+    use UsesTenancyConfig;
+
     /**
      * @var DatabaseManager
      */
-    private $databaseManager;
+    protected $databaseManager;
 
     public function __construct()
     {
@@ -21,9 +24,9 @@ class ChangeTenantDatabaseConnection implements SwitchTenantTask
     }
 
     /**
-     * @param \SergeyKasyanov\Tenancy\Models\Tenant $tenant
+     * @param \GromIT\Tenancy\Models\Tenant $tenant
      *
-     * @throws \October\Rain\Exception\SystemException
+     * @throws \GromIT\Tenancy\Exceptions\ChangeTenantDatabaseException
      */
     public function makeCurrent(Tenant $tenant): void
     {
@@ -31,7 +34,7 @@ class ChangeTenantDatabaseConnection implements SwitchTenantTask
     }
 
     /**
-     * @throws \October\Rain\Exception\SystemException
+     * @throws \GromIT\Tenancy\Exceptions\ChangeTenantDatabaseException
      */
     public function forgetCurrent(): void
     {
@@ -39,34 +42,36 @@ class ChangeTenantDatabaseConnection implements SwitchTenantTask
     }
 
     /**
-     * @param \SergeyKasyanov\Tenancy\Models\Tenant|null $tenant
+     * @param \GromIT\Tenancy\Models\Tenant|null $tenant
      *
-     * @throws \October\Rain\Exception\SystemException
+     * @throws \GromIT\Tenancy\Exceptions\ChangeTenantDatabaseException
      */
-    private function setTenantDatabaseConnection(?Tenant $tenant): void
+    protected function setTenantDatabaseConnection(?Tenant $tenant): void
     {
-        $connectionName = config('sergeykasyanov.tenancy::tenant_connection_name');
+        $connectionName = $this->getTenantConnectionName();
 
         $connectionConfig = config("database.connections.$connectionName");
 
         if ($connectionConfig === null) {
-            $msg = __('sergeykasyanov.tenancy::lang.exceptions.tenant_connection_is_not_set', [
-                'connectionName' => $connectionName
-            ]);
-
-            throw new SystemException($msg);
+            throw ChangeTenantDatabaseException::noTenantDatabaseConfig($connectionName);
         }
 
         $this->databaseManager->purge($connectionName);
 
-        if ($tenant === null) {
-            return;
+        if ($tenant) {
+            config([
+                "database.connections.$connectionName.database" => $tenant->database_name,
+            ]);
+
+            $this->databaseManager->reconnect($connectionName);
+
+            Schema::connection($connectionName)->getConnection()->reconnect();
+        } else {
+            config([
+                "database.connections.$connectionName.database" => null,
+            ]);
+
+            Schema::connection($connectionName)->getConnection()->disconnect();
         }
-
-        config(["database.connections.$connectionName.database" => $tenant->database_name]);
-
-        $this->databaseManager->reconnect($connectionName);
-
-        Schema::connection($connectionName)->getConnection()->reconnect();
     }
 }

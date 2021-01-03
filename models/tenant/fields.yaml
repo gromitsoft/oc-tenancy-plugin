@@ -1,10 +1,11 @@
 fields:
     name:
-        label: sergeykasyanov.tenancy::lang.models.tenant.fields.name.label
+        label: gromit.tenancy::lang.models.tenant.fields.name.label
     is_active:
-        label: sergeykasyanov.tenancy::lang.models.tenant.fields.is_active.label
+        label: gromit.tenancy::lang.models.tenant.fields.is_active.label
         type: switch
+        default: true
     domains:
-        label: sergeykasyanov.tenancy::lang.models.tenant.fields.domains.label
+        label: gromit.tenancy::lang.models.tenant.fields.domains.label
         type: partial
         path: partials/tenant/fields/domains

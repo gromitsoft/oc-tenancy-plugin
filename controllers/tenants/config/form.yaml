@@ -3,32 +3,32 @@
 # ===================================
 
 # Record name
-name: sergeykasyanov.tenancy::lang.controllers.tenants.config.form.name
+name: gromit.tenancy::lang.controllers.tenants.config.form.name
 
 # Model Form Field configuration
-form: $/sergeykasyanov/tenancy/models/tenant/fields.yaml
+form: $/gromit/tenancy/models/tenant/fields.yaml
 
 # Model Class name
-modelClass: SergeyKasyanov\Tenancy\Models\Tenant
+modelClass: GromIT\Tenancy\Models\Tenant
 
 # Default redirect location
-defaultRedirect: sergeykasyanov/tenancy/tenants
+defaultRedirect: gromit/tenancy/tenants
 
 # Create page
 create:
-    title: sergeykasyanov.tenancy::lang.controllers.tenants.config.form.create.title
-    redirect: sergeykasyanov/tenancy/tenants/update/:id
-    redirectClose: sergeykasyanov/tenancy/tenants
-    flashSaved: sergeykasyanov.tenancy::lang.controllers.tenants.config.form.create.flashSaved
+    title: gromit.tenancy::lang.controllers.tenants.config.form.create.title
+    redirect: gromit/tenancy/tenants/update/:id
+    redirectClose: gromit/tenancy/tenants
+    flashSaved: gromit.tenancy::lang.controllers.tenants.config.form.create.flashSaved
 
 # Update page
 update:
-    title: sergeykasyanov.tenancy::lang.controllers.tenants.config.form.update.title
-    redirect: sergeykasyanov/tenancy/tenants
-    redirectClose: sergeykasyanov/tenancy/tenants
-    flashSaved: sergeykasyanov.tenancy::lang.controllers.tenants.config.form.update.flashSaved
-    flashDeleted: sergeykasyanov.tenancy::lang.controllers.tenants.config.form.update.flashDeleted
+    title: gromit.tenancy::lang.controllers.tenants.config.form.update.title
+    redirect: gromit/tenancy/tenants
+    redirectClose: gromit/tenancy/tenants
+    flashSaved: gromit.tenancy::lang.controllers.tenants.config.form.update.flashSaved
+    flashDeleted: gromit.tenancy::lang.controllers.tenants.config.form.update.flashDeleted
 
 # Preview page
 preview:
-    title: sergeykasyanov.tenancy::lang.controllers.tenants.config.form.preview.title
+    title: gromit.tenancy::lang.controllers.tenants.config.form.preview.title

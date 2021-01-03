@@ -1,9 +1,9 @@
 domains:
-    label: sergeykasyanov.tenancy::lang.controllers.tenants.config.relation.domains.label
+    label: gromit.tenancy::lang.controllers.tenants.config.relation.domains.label
     view:
-        list: $/sergeykasyanov/tenancy/models/domain/columns.yaml
+        list: $/gromit/tenancy/models/domain/columns.yaml
         toolbarButtons:
-            create: sergeykasyanov.tenancy::lang.controllers.tenants.config.relation.domains.view.toolbarButtons.create
-            delete: sergeykasyanov.tenancy::lang.controllers.tenants.config.relation.domains.view.toolbarButtons.delete
+            create: gromit.tenancy::lang.controllers.tenants.config.relation.domains.view.toolbarButtons.create
+            delete: gromit.tenancy::lang.controllers.tenants.config.relation.domains.view.toolbarButtons.delete
     manage:
-        form: $/sergeykasyanov/tenancy/models/domain/fields.yaml
+        form: $/gromit/tenancy/models/domain/fields.yaml

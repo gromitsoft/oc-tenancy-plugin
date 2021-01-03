@@ -4,7 +4,7 @@ use October\Rain\Support\Facades\Block;
 use October\Rain\Support\Facades\Form;
 
 /**
- * @var \SergeyKasyanov\Tenancy\Controllers\Tenants|\Backend\Behaviors\FormController $this
+ * @var \GromIT\Tenancy\Controllers\Tenants|\Backend\Behaviors\FormController $this
  */
 ?>
 <?php Block::put('breadcrumb') ?>
@@ -26,18 +26,18 @@ use October\Rain\Support\Facades\Form;
                     data-request="onSave"
                     data-request-data="redirect:0"
                     data-hotkey="ctrl+s, cmd+s"
-                    data-load-indicator="<?= __('sergeykasyanov.tenancy::lang.controllers.tenants.pages.update.btn_save.load_indicator') ?>"
+                    data-load-indicator="<?= __('gromit.tenancy::lang.controllers.tenants.pages.update.btn_save.load_indicator') ?>"
                     class="btn btn-primary">
-                    <?= __('sergeykasyanov.tenancy::lang.controllers.tenants.pages.update.btn_save.label') ?>
+                    <?= __('gromit.tenancy::lang.controllers.tenants.pages.update.btn_save.label') ?>
                 </button>
                 <button
                     type="button"
                     data-request="onSave"
                     data-request-data="close:1"
                     data-hotkey="ctrl+enter, cmd+enter"
-                    data-load-indicator="<?= __('sergeykasyanov.tenancy::lang.controllers.tenants.pages.update.btn_save_and_close.load_indicator') ?>"
+                    data-load-indicator="<?= __('gromit.tenancy::lang.controllers.tenants.pages.update.btn_save_and_close.load_indicator') ?>"
                     class="btn btn-default">
-                    <?= __('sergeykasyanov.tenancy::lang.controllers.tenants.pages.update.btn_save_and_close.label') ?>
+                    <?= __('gromit.tenancy::lang.controllers.tenants.pages.update.btn_save_and_close.label') ?>
                 </button>
                 <button
                     type="button"
@@ -47,9 +47,9 @@ use October\Rain\Support\Facades\Form;
                     data-request-confirm="Delete this tenant?">
                 </button>
                 <span class="btn-text">
-                    <?= __('sergeykasyanov.tenancy::lang.controllers.tenants.pages.common.or') ?>&nbsp;&nbsp;
+                    <?= __('gromit.tenancy::lang.controllers.tenants.pages.common.or') ?>&nbsp;&nbsp;
                     <a href="<?= $this->actionUrl('/') ?>">
-                        <?= __('sergeykasyanov.tenancy::lang.controllers.tenants.pages.common.cancel') ?>
+                        <?= __('gromit.tenancy::lang.controllers.tenants.pages.common.cancel') ?>
                     </a>
                 </span>
             </div>

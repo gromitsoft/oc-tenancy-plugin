@@ -3,16 +3,16 @@
 # ===================================
 
 # Model List Column configuration
-list: $/sergeykasyanov/tenancy/models/tenant/columns.yaml
+list: $/gromit/tenancy/models/tenant/columns.yaml
 
 # Model Class name
-modelClass: SergeyKasyanov\Tenancy\Models\Tenant
+modelClass: GromIT\Tenancy\Models\Tenant
 
 # List Title
-title: sergeykasyanov.tenancy::lang.controllers.tenants.config.list.title
+title: gromit.tenancy::lang.controllers.tenants.config.list.title
 
 # Link URL for each record
-recordUrl: sergeykasyanov/tenancy/tenants/update/:id
+recordUrl: gromit/tenancy/tenants/update/:id
 
 # Message to display if the list is empty
 noRecordsMessage: backend::lang.list.no_records

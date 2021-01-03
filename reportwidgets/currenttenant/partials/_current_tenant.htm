@@ -1,0 +1,37 @@
+<?php
+/**
+ * @var \GromIT\Tenancy\ReportWidgets\CurrentTenant $this
+ * @var \GromIT\Tenancy\Models\Tenant|null          $currentTenant
+ * @var bool                                                $allow
+ */
+
+$langKey = 'gromit.tenancy::lang.report_widgets.current_tenant';
+?>
+<div class="report-widget">
+    <h3><?= e($this->property('title')) ?></h3>
+
+    <?php if (!isset($error)): ?>
+        <div>
+            <?php if ($currentTenant): ?>
+                <?= e($currentTenant->name) ?>
+            <?php else: ?>
+                <?= __("{$langKey}.current_tenant_is_not_set") ?>
+            <?php endif ?>
+        </div>
+        <?php if ($allow): ?>
+            <div class="p-t">
+                <button class="btn btn-default oc-icon-search"
+                        data-control="popup"
+                        data-handler="<?= $this->getEventHandler('onShowOverridePopup') ?>">
+                    <?= __("{$langKey}.select_tenant") ?>
+                </button>
+                <button class="btn btn-default oc-icon-refresh"
+                        data-request="onResetOverride">
+                    <?= __("{$langKey}.reset_override") ?>
+                </button>
+            </div>
+        <?php endif ?>
+    <?php else: ?>
+        <p class="flash-message static warning"><?= e($error) ?></p>
+    <?php endif ?>
+</div>

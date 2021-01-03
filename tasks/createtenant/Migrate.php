@@ -1,30 +1,34 @@
 <?php
 
-namespace SergeyKasyanov\Tenancy\Tasks\CreateTenant;
+namespace GromIT\Tenancy\Tasks\CreateTenant;
 
 use October\Rain\Database\Schema\Blueprint;
 use October\Rain\Support\Facades\Schema;
-use SergeyKasyanov\Tenancy\Actions\MakeTenantCurrent;
-use SergeyKasyanov\Tenancy\Models\Tenant;
-use SergeyKasyanov\Tenancy\Services\PluginsUpdater;
-use SergeyKasyanov\Tenancy\Tasks\CreateTenantTask;
+use GromIT\Tenancy\Actions\CurrentTenant\RunAsTenant;
+use GromIT\Tenancy\Classes\PluginsUpdater;
+use GromIT\Tenancy\Classes\TenancyManager;
+use GromIT\Tenancy\Concerns\UsesTenancyConfig;
+use GromIT\Tenancy\Models\Tenant;
+use GromIT\Tenancy\Tasks\CreateTenantTask;
 
 class Migrate implements CreateTenantTask
 {
+    use UsesTenancyConfig;
+
     /**
      * @var \Illuminate\Database\Migrations\Migrator
      */
-    private $migrator;
+    protected $migrator;
+
+    /**
+     * @var \GromIT\Tenancy\Classes\TenancyManager
+     */
+    protected $tenancyManager;
 
     /**
      * @var string[]
      */
-    private $migrations;
-
-    /**
-     * @var string
-     */
-    private $connection;
+    protected $migrations;
 
     /**
      * Migrate constructor.
@@ -35,39 +39,59 @@ class Migrate implements CreateTenantTask
     {
         $this->migrator = app()->make('migrator');
 
-        $this->migrations = config('sergeykasyanov.tenancy::tenant_db_default_migrations');
-        $this->connection = config('sergeykasyanov.tenancy::tenant_connection_name');
+        $this->migrations = config('gromit.tenancy::database.tenant_db_default_migrations');
+
+        $this->tenancyManager = TenancyManager::instance();
     }
 
+    /**
+     * @param \GromIT\Tenancy\Models\Tenant $tenant
+     *
+     * @throws \October\Rain\Exception\SystemException
+     */
     public function handle(Tenant $tenant): void
     {
-        MakeTenantCurrent::make()->execute($tenant);
+        RunAsTenant::make()->execute($tenant, function () use ($tenant) {
+            $this->createMigrationsTable();
 
-        $this->createMigrationsTable();
+            $this->migrateBaseTables();
 
-        $this->migrateBaseTables();
-
-        $this->migratePlugins($tenant);
-    }
-
-    private function createMigrationsTable(): void
-    {
-        Schema::connection($this->connection)->create('migrations', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('migration');
-            $table->integer('batch');
+            $this->migratePlugins($tenant);
         });
     }
 
-    private function migrateBaseTables(): void
+    protected function createMigrationsTable(): void
     {
-        $this->migrator->setConnection($this->connection);
+        $migrationsTable = config('database.migrations');
 
-        $this->migrator->run($this->migrations);
+        Schema::connection($this->getTenantConnectionName())->create(
+            $migrationsTable,
+            function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('migration');
+                $table->integer('batch');
+            }
+        );
     }
 
-    private function migratePlugins(Tenant $tenant): void
+    protected function migrateBaseTables(): void
     {
-        PluginsUpdater::instance()->updatePluginsForTenant($tenant);
+        $defaultConnection = $this->getDefaultConnectionName();
+
+        $this->migrator->setConnection($this->getTenantConnectionName());
+
+        $this->migrator->run($this->migrations);
+
+        $this->migrator->setConnection($defaultConnection);
+    }
+
+    /**
+     * @param \GromIT\Tenancy\Models\Tenant $tenant
+     *
+     * @throws \October\Rain\Exception\SystemException
+     */
+    protected function migratePlugins(Tenant $tenant): void
+    {
+        PluginsUpdater::instance()->updatePluginsForTenants(collect([$tenant]));
     }
 }

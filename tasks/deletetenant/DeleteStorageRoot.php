@@ -1,14 +1,24 @@
 <?php
 
-namespace SergeyKasyanov\Tenancy\Tasks\DeleteTenant;
+namespace GromIT\Tenancy\Tasks\DeleteTenant;
 
-use SergeyKasyanov\Tenancy\Models\Tenant;
-use SergeyKasyanov\Tenancy\Tasks\DeleteTenantTask;
+use League\Flysystem\Adapter\Local;
+use League\Flysystem\Filesystem;
+use GromIT\Tenancy\Concerns\UsesTenancyConfig;
+use GromIT\Tenancy\Models\Tenant;
+use GromIT\Tenancy\Tasks\DeleteTenantTask;
 
 class DeleteStorageRoot implements DeleteTenantTask
 {
+    use UsesTenancyConfig;
+
     public function handle(Tenant $tenant): void
     {
-        // TODO: Implement handle() method.
+        $rootPath = config("filesystems.disks.{$this->getTenantDiskName()}.root");
+        $rootPath = str_replace('{tenant_id}', $tenant->id, $rootPath);
+
+        $local      = new Local('/');
+        $fileSystem = new Filesystem($local);
+        $fileSystem->deleteDir($rootPath);
     }
 }

@@ -1,6 +1,6 @@
 columns:
     url:
-        label: sergeykasyanov.tenancy::lang.models.domain.columns.url.label
+        label: gromit.tenancy::lang.models.domain.columns.url.label
     is_active:
-        label: sergeykasyanov.tenancy::lang.models.domain.columns.is_active.label
+        label: gromit.tenancy::lang.models.domain.columns.is_active.label
         type: switch

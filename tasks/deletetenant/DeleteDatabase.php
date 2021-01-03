@@ -1,15 +1,17 @@
 <?php
 
-namespace SergeyKasyanov\Tenancy\Tasks\DeleteTenant;
+namespace GromIT\Tenancy\Tasks\DeleteTenant;
 
-use SergeyKasyanov\Tenancy\Models\Tenant;
-use SergeyKasyanov\Tenancy\Services\MysqlDatabaseManager;
-use SergeyKasyanov\Tenancy\Tasks\DeleteTenantTask;
+use GromIT\Tenancy\Concerns\UsesTenancyConfig;
+use GromIT\Tenancy\Models\Tenant;
+use GromIT\Tenancy\Tasks\DeleteTenantTask;
 
 class DeleteDatabase implements DeleteTenantTask
 {
+    use UsesTenancyConfig;
+
     public function handle(Tenant $tenant): void
     {
-        MysqlDatabaseManager::make()->dropDatabase($tenant->database_name);
+        $this->getDatabaseCreator()->dropDatabase($tenant->database_name);
     }
 }

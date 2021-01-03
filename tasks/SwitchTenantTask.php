@@ -1,8 +1,8 @@
 <?php
 
-namespace SergeyKasyanov\Tenancy\Tasks;
+namespace GromIT\Tenancy\Tasks;
 
-use SergeyKasyanov\Tenancy\Models\Tenant;
+use GromIT\Tenancy\Models\Tenant;
 
 interface SwitchTenantTask
 {
