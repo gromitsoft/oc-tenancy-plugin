@@ -1,6 +1,7 @@
 {
     "name": "gromitsoft/oc-tenancy-plugin",
     "description": "Multitenancy for OctoberCMS.",
+    "type": "october-plugin",
     "minimum-stability": "stable",
     "license": "MIT",
     "authors": [
