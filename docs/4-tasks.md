@@ -75,9 +75,9 @@ This task changing tenant storage disk root and url.
 
 This task changing folder and path options of
 
-- cms.storage.uploads
-- cms.storage.media
-- cms.storage.resized
+- system.storage.uploads
+- system.storage.media
+- system.storage.resized
 
 #### \GromIT\Tenancy\Tasks\SwitchTenant\ChangeTenantLoggingChannel
 

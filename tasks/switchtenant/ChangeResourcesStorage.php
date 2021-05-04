@@ -20,7 +20,7 @@ class ChangeResourcesStorage implements SwitchTenantTask
 
     protected function loadOriginalConfigValues(): void
     {
-        $this->originalConfig = config('__defaults.cms.storage') ?? config('cms.storage');
+        $this->originalConfig = config('__defaults.system.storage') ?? config('system.storage');
     }
 
     public function makeCurrent(Tenant $tenant): void
@@ -47,14 +47,14 @@ class ChangeResourcesStorage implements SwitchTenantTask
         }
 
         config([
-            'cms.storage' => $tenantStorageConfig,
+            'system.storage' => $tenantStorageConfig,
         ]);
     }
 
     protected function saveOriginalConfigValues(): void
     {
         config([
-            '__defaults.cms.storage' => config('cms.storage'),
+            '__defaults.system.storage' => config('system.storage'),
         ]);
     }
 
@@ -65,7 +65,7 @@ class ChangeResourcesStorage implements SwitchTenantTask
         }
 
         config([
-            'cms.storage' => config('__defaults.cms.storage'),
+            'system.storage' => config('__defaults.system.storage'),
         ]);
     }
 }

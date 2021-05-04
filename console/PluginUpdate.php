@@ -31,18 +31,6 @@ class PluginUpdate extends Command
     protected $description = 'Update plugins in tenants databases';
 
     /**
-     * @var \GromIT\Tenancy\Classes\PluginsUpdater
-     */
-    protected $pluginUpdater;
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->pluginUpdater = PluginsUpdater::instance();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return void
@@ -78,7 +66,7 @@ class PluginUpdate extends Command
      */
     protected function updatePlugins(Tenant $tenant, Collection $plugins): void
     {
-        $this->pluginUpdater->updatePluginsForTenants($tenant, $plugins);
+        PluginsUpdater::instance()->updatePluginsForTenants($tenant, $plugins);
     }
 
     protected function getPluginUpdateMessage(UpdatingPluginForTenant $event): string

@@ -6,8 +6,8 @@ use GromIT\Tenancy\Actions\CurrentTenant\RunAsTenant;
 use GromIT\Tenancy\Concerns\UsesTenancyConfig;
 use GromIT\Tenancy\Events\UpdatingPluginForTenant;
 use GromIT\Tenancy\Models\Tenant;
-use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use October\Rain\Exception\SystemException;
 use October\Rain\Support\Facades\Schema;
@@ -42,17 +42,11 @@ class PluginsUpdater
      */
     protected $tenancyManager;
 
-    /**
-     * @var DatabaseManager
-     */
-    protected $databaseManager;
-
     protected function init(): void
     {
-        $this->pluginManager   = PluginManager::instance();
-        $this->updateManager   = UpdateManager::instance();
-        $this->tenancyManager  = TenancyManager::instance();
-        $this->databaseManager = app(DatabaseManager::class);
+        $this->pluginManager  = PluginManager::instance();
+        $this->updateManager  = UpdateManager::instance();
+        $this->tenancyManager = TenancyManager::instance();
     }
 
     /**
@@ -66,7 +60,8 @@ class PluginsUpdater
         $tenants,
         ?Collection $plugins = null,
         bool $refresh = false
-    ): void {
+    ): void
+    {
         if ($tenants instanceof Tenant) {
             $tenants = collect([$tenants]);
         } elseif (is_array($tenants)) {
@@ -118,13 +113,13 @@ class PluginsUpdater
     {
         $defaultConnection = $this->getDefaultConnectionName();
 
-        $this->databaseManager->purge($defaultConnection);
+        DB::purge($defaultConnection);
 
         config([
             "database.connections.{$defaultConnection}" => $tenantDatabaseConnectionConfig,
         ]);
 
-        $this->databaseManager->reconnect($defaultConnection);
+        DB::reconnect($defaultConnection);
 
         Schema::connection($defaultConnection)->getConnection()->reconnect();
     }

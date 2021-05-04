@@ -14,16 +14,6 @@ class ChangeTenantDatabaseConnection implements SwitchTenantTask
     use UsesTenancyConfig;
 
     /**
-     * @var DatabaseManager
-     */
-    protected $databaseManager;
-
-    public function __construct()
-    {
-        $this->databaseManager = app(DatabaseManager::class);
-    }
-
-    /**
      * @param \GromIT\Tenancy\Models\Tenant $tenant
      *
      * @throws \GromIT\Tenancy\Exceptions\ChangeTenantDatabaseException
@@ -56,14 +46,14 @@ class ChangeTenantDatabaseConnection implements SwitchTenantTask
             throw ChangeTenantDatabaseException::noTenantDatabaseConfig($connectionName);
         }
 
-        $this->databaseManager->purge($connectionName);
+        \DB::purge($connectionName);
 
         if ($tenant) {
             config([
                 "database.connections.$connectionName.database" => $tenant->database_name,
             ]);
 
-            $this->databaseManager->reconnect($connectionName);
+            \DB::reconnect($connectionName);
 
             Schema::connection($connectionName)->getConnection()->reconnect();
         } else {

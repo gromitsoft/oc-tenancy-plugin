@@ -2,6 +2,7 @@
 
 namespace GromIT\Tenancy\Console;
 
+use GromIT\Tenancy\Classes\PluginsUpdater;
 use GromIT\Tenancy\Events\UpdatingPluginForTenant;
 use GromIT\Tenancy\Models\Tenant;
 use Illuminate\Support\Collection;
@@ -20,7 +21,7 @@ class PluginRefresh extends PluginUpdate
 
     protected function updatePlugins(Tenant $tenant, Collection $plugins): void
     {
-        $this->pluginUpdater->updatePluginsForTenants($tenant, $plugins, true);
+        PluginsUpdater::instance()->updatePluginsForTenants($tenant, $plugins, true);
     }
 
     protected function getPluginUpdateMessage(UpdatingPluginForTenant $event): string

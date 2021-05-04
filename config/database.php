@@ -43,11 +43,6 @@ return [
         base_path('modules/system/database/migrations/2013_10_01_000003_Db_System_Plugin_Versions.php'),
         base_path('modules/system/database/migrations/2013_10_01_000004_Db_System_Plugin_History.php'),
         base_path('modules/system/database/migrations/2013_10_01_000005_Db_System_Settings.php'),
-        base_path('modules/system/database/migrations/2013_10_01_000007_Db_System_Add_Disabled_Flag.php'),
-        base_path('modules/system/database/migrations/2015_10_01_000015_Db_System_Add_Frozen_Flag.php'),
         base_path('modules/system/database/migrations/2015_10_01_000017_Db_System_Revisions.php'),
-        base_path('modules/system/database/migrations/2016_10_01_000019_Db_System_Plugin_History_Detail_Text.php'),
-        base_path('modules/system/database/migrations/2017_08_04_121309_Db_Deferred_Bindings_Add_Index_Session.php'),
-        plugins_path('gromit/tenancy/migrations/2016_10_01_000020_FixSystemTimestamps.php')
     ],
 ];

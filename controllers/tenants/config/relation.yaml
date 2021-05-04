@@ -2,8 +2,6 @@ domains:
     label: gromit.tenancy::lang.controllers.tenants.config.relation.domains.label
     view:
         list: $/gromit/tenancy/models/domain/columns.yaml
-        toolbarButtons:
-            create: gromit.tenancy::lang.controllers.tenants.config.relation.domains.view.toolbarButtons.create
-            delete: gromit.tenancy::lang.controllers.tenants.config.relation.domains.view.toolbarButtons.delete
+        toolbarButtons: create|delete
     manage:
         form: $/gromit/tenancy/models/domain/fields.yaml

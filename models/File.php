@@ -25,7 +25,7 @@ class File extends \System\Models\File
     protected function getLocalRootPath()
     {
         if ($this->usingIsolatedResourcesStorage()) {
-            $disk = config('cms.storage.uploads.disk');
+            $disk = config('system.storage.uploads.disk');
 
             return config("filesystems.disks.$disk.root", parent::getLocalRootPath());
         }
