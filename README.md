@@ -23,6 +23,10 @@ For creating tenants databases username and password of tenant connection will b
 
 Full documentation can be found in **docs** directory.
 
+## Requirements
+
+GromIT.Tenancy requires OctoberCMS v2.
+
 ## Credits
 
 Created by [Sergey Kasyanov](https://github.com/SergeyKasyanov) at [GromIT](https://grom-it.ru).
