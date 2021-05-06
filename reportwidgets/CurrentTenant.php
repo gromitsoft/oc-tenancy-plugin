@@ -1,23 +1,19 @@
 <?php
 
-/**
- * @noinspection UnknownInspectionInspection
- */
-
 namespace GromIT\Tenancy\ReportWidgets;
 
 use Backend\Classes\ReportWidgetBase;
 use Backend\Facades\BackendAuth;
 use Backend\Widgets\Form;
 use Exception;
-use Illuminate\Http\RedirectResponse;
-use October\Rain\Database\Model;
-use October\Rain\Exception\ValidationException;
-use October\Rain\Support\Facades\Flash;
 use GromIT\Tenancy\Classes\CurrentTenantOverrider;
 use GromIT\Tenancy\Classes\Permissions;
 use GromIT\Tenancy\Classes\TenancyManager;
 use GromIT\Tenancy\Models\Tenant;
+use Illuminate\Http\RedirectResponse;
+use October\Rain\Database\Model;
+use October\Rain\Exception\ValidationException;
+use October\Rain\Support\Facades\Flash;
 
 /**
  * CurrentTenant Report Widget
@@ -37,11 +33,10 @@ class CurrentTenant extends ReportWidgetBase
     /**
      * @var string
      */
-    protected $langKey;
+    protected $langKey = 'gromit.tenancy::lang.report_widgets.current_tenant';
 
     public function init(): void
     {
-        $this->langKey        = 'gromit.tenancy::lang.report_widgets.current_tenant';
         $this->tenancyManager = TenancyManager::instance();
 
         /** @var \Backend\Models\User $user */
@@ -53,27 +48,10 @@ class CurrentTenant extends ReportWidgetBase
     }
 
     /**
-     * Defines the widget's properties
-     *
-     * @return array
-     */
-    public function defineProperties(): array
-    {
-        return [
-            'title' => [
-                'title'             => 'backend::lang.dashboard.widget_title_label',
-                'default'           => __("{$this->langKey}.label"),
-                'type'              => 'string',
-                'validationPattern' => '^.+$',
-                'validationMessage' => 'backend::lang.dashboard.widget_title_error',
-            ],
-        ];
-    }
-
-    /**
      * Renders the widget's primary contents.
      *
      * @return string HTML markup supplied by this widget.
+     * @throws \SystemException
      */
     public function render(): string
     {
@@ -96,14 +74,14 @@ class CurrentTenant extends ReportWidgetBase
 
         $this->vars['allow']         = $user->hasAccess(Permissions::OVERRIDE_CURRENT_TENANT);
         $this->vars['currentTenant'] = $this->tenancyManager->getCurrent();
+        $this->vars['title']         = __("{$this->langKey}.label");
     }
 
     /**
-     * @noinspection PhpUnused
+     * @throws \SystemException
      */
     public function onShowOverridePopup(): string
     {
-        /** @noinspection PhpUndefinedFieldInspection */
         return $this->makePartial('choose_form', [
             'form' => $this->controller->widget->chooseTenantForm
         ]);

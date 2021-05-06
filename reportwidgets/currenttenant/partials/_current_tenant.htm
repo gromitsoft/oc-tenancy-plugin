@@ -2,13 +2,14 @@
 /**
  * @var \GromIT\Tenancy\ReportWidgets\CurrentTenant $this
  * @var \GromIT\Tenancy\Models\Tenant|null          $currentTenant
- * @var bool                                                $allow
+ * @var bool                                        $allow
+ * @var string                                      $title
  */
 
 $langKey = 'gromit.tenancy::lang.report_widgets.current_tenant';
 ?>
 <div class="report-widget">
-    <h3><?= e($this->property('title')) ?></h3>
+    <h3><?= $title ?></h3>
 
     <?php if (!isset($error)): ?>
         <div>
