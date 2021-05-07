@@ -23,6 +23,10 @@ class Tenantable extends Model
 
     public $timestamps = false;
 
+    protected $casts = [
+        'tenant_id' => 'int',
+    ];
+
     public $belongsTo = [
         'tenant' => Tenant::class,
     ];
