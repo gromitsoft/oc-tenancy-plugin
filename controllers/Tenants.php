@@ -7,6 +7,7 @@ use Backend\Behaviors\ListController;
 use Backend\Behaviors\RelationController;
 use Backend\Classes\Controller;
 use Backend\Facades\BackendMenu;
+use GromIT\Tenancy\Classes\Permissions;
 use Illuminate\Http\RedirectResponse;
 use October\Rain\Database\Relations\HasMany;
 use October\Rain\Support\Facades\Flash;
@@ -24,6 +25,8 @@ class Tenants extends Controller
     public $listConfig = 'config/list.yaml';
     public $formConfig = 'config/form.yaml';
     public $relationConfig = 'config/relation.yaml';
+
+    protected $requiredPermissions = [Permissions::MANAGE_TENANTS];
 
     public function __construct()
     {
