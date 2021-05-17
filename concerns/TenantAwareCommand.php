@@ -62,7 +62,7 @@ trait TenantAwareCommand
         if ($tenantId === 'all') {
             $tenants = Tenant::query()->get();
         } else {
-            $tenants = Tenant::query()->where('id', $tenantId)->get($tenantId);
+            $tenants = Tenant::query()->where('id', $tenantId)->get();
         }
 
         if ($tenants->isEmpty()) {
