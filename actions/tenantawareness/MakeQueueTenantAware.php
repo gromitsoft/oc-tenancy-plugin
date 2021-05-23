@@ -50,7 +50,6 @@ class MakeQueueTenantAware
                 return;
             }
 
-            /** @noinspection PhpUnhandledExceptionInspection */
             $tenant = $this->findTenant($event);
 
             MakeTenantCurrent::make()->execute($tenant);
@@ -87,17 +86,21 @@ class MakeQueueTenantAware
         return $tenant;
     }
 
-    /** @noinspection PhpUnusedParameterInspection */
     protected function listenForJobsBeingQueued(): self
     {
         app('queue')->createPayloadUsing(function ($connectionName, $queue, $payload) {
-            $queueable = $payload['data']['command'];
+            $queueable = app($payload['job']);
 
             if (!$this->isTenantAware($queueable)) {
                 return [];
             }
 
-            return ['tenantId' => optional($this->tenancyManager->getCurrent())->id];
+            return [
+                'data' => array_merge(
+                    $payload['data'],
+                    ['tenantId' => optional($this->tenancyManager->getCurrent())->id]
+                )
+            ];
         });
 
         return $this;
